@@ -6,6 +6,55 @@ import "./global.css";
 
 import styles from "./App.module.css";
 
+const posts = [
+  {
+    id: 1,
+    author: {
+      avatarUrl: 'https://avatars.githubusercontent.com/u/94122433?v=4',
+      name: 'Weder Monteiro',
+      role: 'Analista De Sistema Senior'
+    },
+    content: [
+      { 
+        type: 'paragraph', 
+        content: 'Fala galeraa 👋',
+      },
+      { 
+        type: 'paragraph', 
+        content: 'Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀',
+      },
+      { 
+        type: 'link', 
+        content: 'jane.design/doctorcare',
+      },
+    ],
+    publishedAt: new Date('2022-08-28 20:00:00'),
+  },
+  {
+    id: 2,
+    author: {
+      avatarUrl: 'https://avatars.githubusercontent.com/u/2254731?v=4',
+      name: 'Diego Rock',
+      role: 'CTO rockseat'
+    },
+    content: [
+      { 
+        type: 'paragraph', 
+        content: 'Fala galeraa 👋',
+      },
+      { 
+        type: 'paragraph', 
+        content: 'Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀',
+      },
+      { 
+        type: 'link', 
+        content: 'jane.design/doctorcare',
+      },
+    ],
+    publishedAt: new Date('2022-08-31 17:00:00'),
+  },
+];
+
 export function App() {
   return (
   <div>
@@ -14,14 +63,16 @@ export function App() {
     <div className={styles.wrapper}>
       <Sidebar />
       <main>
-        <Post 
-          author="Weder Monteiro" 
-          content="Lorem ipsum dolor sit amet, consectetur adipisicing elit. At veritatis corporis quod sapiente, blanditiis voluptatibus nesciunt, quae molestias fugit nulla consectetur nemo, soluta sed culpa nisi ea beatae deserunt illo."
-        />
-        <Post 
-          author="Diana Silva" 
-          content="Lorem ipsum dolor sit amet, consectetur adipisicing elit. At veritatis corporis quod sapiente, blanditiis voluptatibus nesciunt, quae molestias fugit nulla consectetur nemo, soluta sed culpa nisi ea beatae deserunt illo."
-        />
+        {posts.map(post => {
+          return (
+            <Post 
+              key={post.id}
+              author={post.author}
+              content={post.content}
+              publishedAt={post.publishedAt}
+            />
+          )
+        })}
       </main>
     </div>
   </div>
