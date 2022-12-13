@@ -3,9 +3,26 @@ import ptBR from 'date-fns/locale/pt-BR';
 import { Comment } from './Comment';
 import { Avatar }  from './Avatar'
 import styles from './Post.module.css';
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react';
 
-export function Post({ author, publishedAt, content }) {
+interface Author {
+    name: string;
+    role: string;
+    avatarUrl: string;
+}
+
+interface Content {
+    type: 'paragraph' | 'link';
+    content: string;
+}
+
+interface PostProps {
+    author: Author;
+    publishedAt: Date;
+    content: Content[];
+}
+
+export function Post({ author, publishedAt, content }: PostProps) {
     const [comments, setComments] = useState([
         'Post muito bacana, hein?!'
     ]);
@@ -21,23 +38,23 @@ export function Post({ author, publishedAt, content }) {
         addSuffix: true,
     });
 
-    function handleCreateNewComment(event) {
+    function handleCreateNewComment(event: FormEvent) {
         event.preventDefault(); //Evita o html renderizar para outra pagina é um efeito padrão do html
 
         setComments([...comments, newCommentText]);
         setNewCommentText('');
     }
 
-    function handleNewCommentChange(event) {
+    function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
         event.target.setCustomValidity('');
         setNewCommentText(event.target.value);
     }
 
-    function handleNewCommentInvalid(event) {
+    function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
         event.target.setCustomValidity('Esse campo é obrigatorio');
     }
 
-    function deleteComment(commentToDelete) {
+    function deleteComment(commentToDelete: string) {
         const commentsWithoutDeletedOne = comments.filter(comment => {
             return comment !== commentToDelete;
         });
